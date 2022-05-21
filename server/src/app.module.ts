@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import mongoose from 'mongoose';
+import { UserModule } from './router/user/user.module';
 
 @Module({
   imports: [
@@ -14,6 +16,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
         useUnifiedTopology: true,
       },
     ),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -21,5 +24,6 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(LoggerMiddleware).forRoutes('*');
+    mongoose.set('debug', true);
   }
 }

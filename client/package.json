@@ -13,7 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"cd .. && cd server && nest start --watch\"",
+    "start": "concurrently \"react-scripts start\" \"cd .. && cd server && yarn install && nest start --watch\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

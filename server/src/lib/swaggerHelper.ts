@@ -9,8 +9,8 @@ export class SwaggerHelper {
     const serverUrl = '/';
 
     const options = new DocumentBuilder()
-      .setTitle('malang online API Docs')
-      .setDescription('malang online API description')
+      .setTitle('ssumc login API Docs')
+      .setDescription('ssumc login API description')
       .setVersion('1.0.0')
       .addServer(serverUrl)
       .addBearerAuth(
