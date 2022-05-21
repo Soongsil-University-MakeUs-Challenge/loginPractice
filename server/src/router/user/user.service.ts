@@ -10,30 +10,35 @@ export class UserService {
   constructor(@InjectModel(User.name) private catModel: Model<UserDocument>) {}
 
   async SignUp(signUpBody: UserSignUpBodyDto) {
-    console.log(signUpBody);
     const { email, id, password, nickname } = signUpBody;
-    console.log(1);
-    console.log(password);
-    console.log(id);
-    const isExistId = await this.catModel.exists({ id });
-    console.log(2);
-    console.log(password);
-    if (isExistId) {
-      console.log(3);
-      console.log(password);
-      throw new HttpException('해당 id는 이미 사용중입니다..', 405);
+    try {
+      await this.checkIdExist(id);
+    } catch (error) {
+      return {
+        statusCode: error.status,
+        statusMsg: error.message,
+      };
     }
-    console.log(4);
-    console.log(password);
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    console.log(hashedPassword);
+    const encryptedPassword = await this.passwordEncrypt(password);
     const user = await this.catModel.create({
       id,
       email,
-      password: hashedPassword,
+      password: encryptedPassword,
       nickname,
     });
+
+    return user;
+  }
+
+  private async checkIdExist(id: UserSignUpBodyDto['id']) {
+    const isExistId = await this.catModel.exists({ id });
+    if (isExistId) {
+      throw new HttpException('해당 id는 이미 사용중입니다.', 405);
+    }
+  }
+
+  private async passwordEncrypt(password: UserSignUpBodyDto['password']) {
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password, salt);
   }
 }
