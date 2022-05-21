@@ -1,14 +1,20 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResponseDecoratorFactory } from 'src/lib/ResponseBuilder';
+import { AuthService } from '../auth/auth.service';
+import { UserSignInBodyDto } from './dto/userSignInBodyDto';
 import { UserSignUpBodyDto } from './dto/userSignUpBodyDto';
+import { SignInResponse } from './response/SignInResponse';
 import { SignUpResponse } from './response/SignUpResponse';
 import { UserService } from './user.service';
 
 @ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @ApiResponseDecoratorFactory(ApiOkResponse, SignUpResponse)
   @UseGuards()
@@ -18,10 +24,10 @@ export class UserController {
   }
 
   //TODO : APIOKReesponse 뒤에 response data type 넣어줘야됨
-  //   @ApiResponseDecoratorFactory(ApiOkResponse)
-  //   @UseGuards()
-  //   @Post('/signUp')
-  //   async signIn(@Body() body: UserSignInBodyDto) {
-  //     return body;
-  //   }
+  @ApiResponseDecoratorFactory(ApiOkResponse, SignInResponse)
+  @UseGuards()
+  @Post('/signIn')
+  async signIn(@Body() body: UserSignInBodyDto) {
+    return this.authService.jwtSignIn(body);
+  }
 }

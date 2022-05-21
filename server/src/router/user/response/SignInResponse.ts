@@ -1,15 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseResponse } from 'src/lib/ResponseBuilder';
 
-export class SignUpResponse extends BaseResponse {
+export class SignInResponse extends BaseResponse {
   @ApiProperty()
-  id: string;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  nickname: string;
+  token: string;
 
   @ApiProperty({ example: 200 })
   statusCode: number;

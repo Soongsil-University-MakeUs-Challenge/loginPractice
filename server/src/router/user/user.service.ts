@@ -1,18 +1,16 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { UserSignUpBodyDto } from './dto/userSignUpBodyDto';
-import { User, UserDocument } from './schema/user.schema';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private catModel: Model<UserDocument>) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async SignUp(signUpBody: UserSignUpBodyDto) {
     const { email, id, password, nickname } = signUpBody;
     try {
-      await this.checkIdExist(id);
+      await this.checkDuplicate(id);
     } catch (error) {
       return {
         statusCode: error.status,
@@ -20,19 +18,19 @@ export class UserService {
       };
     }
     const encryptedPassword = await this.passwordEncrypt(password);
-    const user = await this.catModel.create({
+    const user = await this.userRepository.createUser({
       id,
       email,
       password: encryptedPassword,
       nickname,
     });
-
+    console.log(user);
     return user;
   }
 
-  private async checkIdExist(id: UserSignUpBodyDto['id']) {
-    const isExistId = await this.catModel.exists({ id });
-    if (isExistId) {
+  private async checkDuplicate(id: UserSignUpBodyDto['id']) {
+    const isExist = await this.userRepository.duplicateCheck(id);
+    if (isExist) {
       throw new HttpException('해당 id는 이미 사용중입니다.', 405);
     }
   }
