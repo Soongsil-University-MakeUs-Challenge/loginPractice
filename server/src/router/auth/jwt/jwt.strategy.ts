@@ -1,12 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
 import { PassportStrategy } from '@nestjs/passport';
-import { jwtConstants } from './constants';
+import { jwtConstants, JwtPayload } from './constants';
+import { UserRepository } from 'src/router/user/user.repository';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly authService: AuthService) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userRepository: UserRepository,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true, // 일단은 무한하게 해둠
@@ -14,10 +18,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  //controller에 @UseGuards(JwtAuthGuard) 붙은 메서드들은 여기를 사전에 거쳐서 검증을 한다.
-  //   async validate(payload: JwtPayload): Promise<AuthenticatedUser> {
-  //     const account = await this.authService.validateAccount(payload);
-  //     if (!account) throw new UnauthorizedException();
-  //     return account;
-  //   }
+  async validate(payload: JwtPayload) {
+    const user = this.fineUserById(payload.id);
+    if (user) {
+      return user; // request.user
+    } else {
+      throw new UnauthorizedException('unauthorized reequest');
+    }
+  }
 }

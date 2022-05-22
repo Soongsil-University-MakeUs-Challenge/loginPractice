@@ -3,6 +3,7 @@ import { UserRepository } from '../user/user.repository';
 import { SignInRequestDto } from './dto/signIn.requestdto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './jwt/constants';
 
 @Injectable()
 export class AuthService {
@@ -13,10 +14,7 @@ export class AuthService {
 
   async jwtSignIn(data: SignInRequestDto) {
     const { id, password } = data;
-
-    console.log(1);
     const user = await this.userRepository.fineUserById(id);
-
     if (!user) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
@@ -30,9 +28,7 @@ export class AuthService {
     if (!isPasswordValidated) {
       throw new UnauthorizedException('이메일과 비밀번호를 확인해주세요.');
     }
-
     const payload = { id: id, sub: user.id };
-
     return {
       token: this.jwtService.sign(payload),
     };

@@ -3,11 +3,8 @@ export const jwtConstants = {
 };
 
 export interface JwtPayload {
-  uid: number;
-  username: string;
-  clientId: number;
-  regionCode: string;
-  appVersion: string;
-  createdAt: number;
-  expireAt: number | null;
+  id: string;
+  password: string;
+  nickname: string;
+  email: string;
 }

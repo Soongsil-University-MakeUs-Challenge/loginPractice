@@ -1,7 +1,8 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResponseDecoratorFactory } from 'src/lib/ResponseBuilder';
 import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import { UserSignInBodyDto } from './dto/userSignInBodyDto';
 import { UserSignUpBodyDto } from './dto/userSignUpBodyDto';
 import { SignInResponse } from './response/SignInResponse';
@@ -29,5 +30,12 @@ export class UserController {
   @Post('/signIn')
   async signIn(@Body() body: UserSignInBodyDto) {
     return this.authService.jwtSignIn(body);
+  }
+
+  @ApiResponseDecoratorFactory(ApiOkResponse, SignInResponse)
+  @UseGuards(JwtAuthGuard)
+  @Get('')
+  async UserIfno(@Req() req: Express.AuthenticatedRequest) {
+    console.log(req);
   }
 }
