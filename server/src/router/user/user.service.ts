@@ -24,7 +24,6 @@ export class UserService {
       password: encryptedPassword,
       nickname,
     });
-    console.log(user);
     return user;
   }
 

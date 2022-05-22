@@ -1,10 +1,11 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResponseDecoratorFactory } from 'src/lib/ResponseBuilder';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/jwt/jwt.guard';
 import { UserSignInBodyDto } from './dto/userSignInBodyDto';
 import { UserSignUpBodyDto } from './dto/userSignUpBodyDto';
+import { GetUserInfoResponse } from './response/GetUserInfoResponse';
 import { SignInResponse } from './response/SignInResponse';
 import { SignUpResponse } from './response/SignUpResponse';
 import { UserService } from './user.service';
@@ -32,10 +33,12 @@ export class UserController {
     return this.authService.jwtSignIn(body);
   }
 
-  @ApiResponseDecoratorFactory(ApiOkResponse, SignInResponse)
+  @ApiResponseDecoratorFactory(ApiOkResponse, GetUserInfoResponse)
   @UseGuards(JwtAuthGuard)
-  @Get('')
-  async UserIfno(@Req() req: Express.AuthenticatedRequest) {
-    console.log(req);
+  @ApiBearerAuth('Authorization')
+  @Get()
+  async UserInfo(@Req() req: Express.AuthenticatedRequest) {
+    const { id, nickname, email } = req.user;
+    return { id, nickname, email };
   }
 }

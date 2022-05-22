@@ -8,7 +8,7 @@ import {
 
 export abstract class BaseResponse {
   abstract statusCode: number;
-  abstract statusMsg: string;
+  abstract message: string;
 }
 
 export type ApiResponse<T extends BaseResponse> = Promise<T>;

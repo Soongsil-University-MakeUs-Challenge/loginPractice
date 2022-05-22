@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
 import { PassportStrategy } from '@nestjs/passport';
@@ -19,11 +23,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    const user = this.fineUserById(payload.id);
+    const user = this.userRepository.fineUserById(payload.id);
     if (user) {
       return user; // request.user
     } else {
-      throw new UnauthorizedException('unauthorized reequest');
+      throw new HttpException('인증되지 않은 사용자의 요청입니다..', 405);
     }
   }
 }

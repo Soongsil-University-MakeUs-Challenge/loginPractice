@@ -9,5 +9,5 @@ export class SignInResponse extends BaseResponse {
   statusCode: number;
 
   @ApiProperty({ example: 'sign in success' })
-  statusMsg: string;
+  message: string;
 }
