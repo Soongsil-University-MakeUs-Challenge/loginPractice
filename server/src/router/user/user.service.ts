@@ -26,6 +26,37 @@ export class UserService {
     });
     return user;
   }
+  async EditUserInfo({
+    id,
+    email,
+    nickname,
+  }: Partial<Omit<UserSignUpBodyDto, 'passowrd'>>) {
+    nickname ?? this.nicknameValidate(nickname);
+    email ?? this.emailValidate(email);
+    const editedUserInfo = this.userRepository.editUserInfo({
+      id,
+      email,
+      nickname,
+    });
+    return editedUserInfo;
+  }
+
+  private nicknameValidate(nickname: UserSignUpBodyDto['nickname']) {
+    if (nickname === '욕') {
+      throw new HttpException('이메일 입력값이 잘못됐습니다.', 405);
+    } else return;
+  }
+
+  private emailValidate(email: UserSignUpBodyDto['email']) {
+    const emailRegExp =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (emailRegExp.test(email)) {
+      return;
+    } else {
+      throw new HttpException('이메일 입력값이 잘못됐습니다.', 405);
+    }
+  }
 
   private async checkDuplicate(id: UserSignUpBodyDto['id']) {
     const isExist = await this.userRepository.duplicateCheck(id);

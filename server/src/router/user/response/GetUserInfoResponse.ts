@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseResponse } from 'src/lib/ResponseBuilder';
-import { User } from 'src/schema/user.schema';
 
 export class GetUserInfoResponse extends BaseResponse {
   @ApiProperty()
@@ -12,12 +11,9 @@ export class GetUserInfoResponse extends BaseResponse {
   @ApiProperty()
   email: string;
 
-  @ApiProperty()
-  userInfo: User;
-
   @ApiProperty({ example: 200 })
   statusCode: number;
 
-  @ApiProperty({ example: 'sign in success' })
+  @ApiProperty({ example: 'success to get use info' })
   message: string;
 }
