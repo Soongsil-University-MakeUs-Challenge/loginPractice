@@ -20,7 +20,6 @@ export class UserController {
   ) {}
 
   @ApiResponseDecoratorFactory(ApiOkResponse, SignUpResponse)
-  @UseGuards()
   @Post('/signUp')
   async SignUp(@Body() body: UserSignUpBodyDto) {
     return await this.userService.SignUp(body);
@@ -28,7 +27,6 @@ export class UserController {
 
   //TODO : APIOKReesponse 뒤에 response data type 넣어줘야됨
   @ApiResponseDecoratorFactory(ApiOkResponse, SignInResponse)
-  @UseGuards()
   @Post('/signIn')
   async signIn(@Body() body: UserSignInBodyDto) {
     return this.authService.jwtSignIn(body);
