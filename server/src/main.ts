@@ -13,6 +13,7 @@ async function bootstrap() {
     }),
   );
   SwaggerHelper.setup(app);
+  app.enableCors();
   await app.listen(5001);
 }
 bootstrap();
