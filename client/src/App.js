@@ -9,21 +9,28 @@ function App() {
       <body>
         <p>Sign in</p>
         <form action="" method="POST">
-          <div class="input-box">
-            <input id="username" type="text" name="username" placeholder="ID" />
+          <div className="input-box">
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="ID"
+              required
+            />
           </div>
 
-          <div class="input-box">
+          <div className="input-box">
             <input
               id="password"
               type="password"
               name="password"
               placeholder="PW"
+              required
             />
           </div>
-          <input type="button" value="LOG IN" />
+          <input className="bnt" type="submit" value="LOG IN" />
         </form>
-        <input type="button" value="CREATE ACCOUNT" />
+        <input className="bnt" type="button" value="CREATE ACCOUNT" />
       </body>
     </div>
   );
