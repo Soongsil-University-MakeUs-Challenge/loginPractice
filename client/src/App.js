@@ -1,17 +1,22 @@
-import "./App.css";
+import "./app.css";
 import React from "react";
-import Login from "./components/Login";
+import Login from "./components/login";
+import Join from "./components/join";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-function App() {
+function app() {
   return (
-    <>
+    <BrowserRouter>
       <div className="App">
         <header className="App-header">
           <div>login-practice</div>
         </header>
       </div>
-      <Login />
-    </>
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route path="/join" element={<Join />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-export default App;
+export default app;

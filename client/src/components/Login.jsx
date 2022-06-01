@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function Login() {
+function login() {
   return (
     <body>
       <div className="sign-in">Sign in</div>
@@ -26,8 +27,18 @@ function Login() {
         </div>
         <input className="bnt" type="submit" value="LOG IN" />
       </form>
-      <input className="bnt" type="button" value="CREATE ACCOUNT" />
+
+      <Link
+        to="/join"
+        // style={{
+        //   textDecoration: "none",
+        //   color: "black",
+        //   cursor: "pointer",
+        // }}
+      >
+        <input className="bnt" type="button" value="CREATE ACCOUNT" />
+      </Link>
     </body>
   );
 }
-export default Login;
+export default login;
