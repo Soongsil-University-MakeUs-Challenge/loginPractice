@@ -3,7 +3,7 @@
 ### 1. 클론 받자마자 해야할 일
 
 1. 혹시 다른 사람이 사용할 수 있으니 브랜치를 새로 만들어서 작업합니다.
-2. 디펜던시들을 다운로드 해줍니다! 
+2. 디펜던시들을 다운로드 해줍니다!  <br/>
 2-1. npm 도 좋지만 이 프로젝트는 yarn을 사용하기 때문에 server폴더에서 yarn install해주고, client폴더에서도 yarn install 해줍니다.
 3. 그리고 난 후 client폴더에서 yarn start를 해주고 개발을 시작합니다.
 
@@ -32,6 +32,6 @@
 ![image](https://user-images.githubusercontent.com/69836010/173842422-3c6d4e9e-69c4-4856-ba6c-b02920d7c717.png)
 
 
-위와같은 에러가 발생하면 server에서 
-yarn cache clean -all 을 먼저 실행해주고
+위와같은 에러가 발생하면 server에서  <br/>
+yarn cache clean -all 을 먼저 실행해주고 <br/>
 yarn install 해줍니다
