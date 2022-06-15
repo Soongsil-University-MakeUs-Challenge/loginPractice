@@ -35,3 +35,12 @@
 위와같은 에러가 발생하면 server에서  <br/>
 yarn cache clean -all 을 먼저 실행해주고 <br/>
 yarn install 해줍니다
+
+
+![image](https://user-images.githubusercontent.com/69836010/173872048-1705ac83-a1e6-4336-832b-5fafb172f9cc.png)
+
+
+위와같은 에러 발생하면 <br/>
+server내부에 있는 .yarn 파일을 삭제하고 <br/> 
+다시 yarn install 해준 이후 <br/> 
+yarn start를 해줍니다
