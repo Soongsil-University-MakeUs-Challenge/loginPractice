@@ -1,48 +1,42 @@
-import React, { Component } from 'react';
+import React, {useState} from 'react';
+import SignUpReal from './SignUpReal'
+import SignIn from './SignIn'
+import Check from './Check'
+import Change from './Change'
 
 
-class Signup extends Component {
-    render() {
-        return (
-            <div className='rectangle'>
-                <div className='input_header'>
-                    회원가입
-                </div>
+export const BASE_URL = 'http://localhost:5001'
 
-                <form className='id_input'>
-                    <label className='id_label'>
-                        <div className='text1'>ID<br/></div>
-                        <input type="id"/>
-                    </label>
-                    <input type="submit" value="생성" />
-                </form>
-
-                <form className='password_input'>
-                    <label className='password_label'>
-                        <div className='text2'>PASSWORD<br/></div>
-                        <input type="password"/>
-                    </label>
-                    <input type="submit" value="생성" />
-                </form>
-
-                <form className='nickname_input'>
-                    <label className='nickname_label'>
-                        <div className='text3'>NICKNAME<br/></div>
-                        <input type="name"/>
-                    </label>
-                    <input type="submit" value="입력" />
-                </form>
-
-                <form className='email_input'>
-                    <label className='email_label'>
-                        <div className='text4'>E-mail<br/></div>
-                        <input type="email"/>
-                    </label>
-                    <input type="submit" value="입력" />
-                </form>
-            </div>
-        );
-    }
+export const pagenation = {
+    signUp: 0,
+    signIn: 1,
+    check: 2,
+    chage: 3,
 }
+
+const Signup = () => {
+    const [page, setPage] = useState(pagenation.signIn)
+    const [token, setToken] = useState('')
+    const [userInfo, setUserInfo] = useState()
+
+
+    return (
+        <>
+        {page === pagenation.signUp ? 
+                <SignUpReal setPage={setPage}/ >
+            : page === pagenation.signIn ? 
+                <SignIn setPage={setPage} setToken={setToken}/>
+            :  page === pagenation.check ? 
+                <Check setPage={setPage} setUserInfo={setUserInfo} userInfo={userInfo}/>
+            : page === pagenation.chage  ? 
+                <Change userInfo={userInfo} setUserInfo={setUserInfo}/>
+            :
+            <></>}
+        </>
+    );
+
+  
+}
+
 
 export default Signup;
