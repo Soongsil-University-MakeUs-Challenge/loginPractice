@@ -12,8 +12,8 @@
 
 1. 회원가입 기능을 구현한다. (id, password, nickname, email을 입력해줘야함)
 2. 로그인 기능을 구현한다. (jwt토근 기반) (id, password를 입력해야함)
-3. 내 정보를 불러오고 (id, nickname, email을 이)
-4. 내 정보를 수정한다. (nickname, email)
+3. 내 정보를 불러오고 (jwt토큰 기반으로 요청하면 id, nickname, email을 받아올 수 있다.)
+4. 내 정보를 수정한다. (jwt토큰 기반으로 요청하면 nickname, email을 수정할 수 있다.)
 
 
 ### 3. 주의 사항
